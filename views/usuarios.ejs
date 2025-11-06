@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios</title>
+</head>
+<body>
+  <h1>Gestión de Usuarios (solo admin)</h1>
+
+  <% if (usuario && usuario.rol === 'admin') { %>
+    <p><button onclick="location.href='/usuarios/nuevo'">Agregar nuevo usuario</button></p>
+  <% } %>
+
+  <table border="1" cellpadding="5">
+    <tr><th>ID</th><th>Nombre</th><th>Rol</th></tr>
+    <% usuarios.forEach(u => { %>
+      <tr>
+        <td><%= u.id %></td>
+        <td><%= u.nombre %></td>
+        <td><%= u.rol %></td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <p><a href="/dashboard">Volver al Dashboard</a></p>
+</body>

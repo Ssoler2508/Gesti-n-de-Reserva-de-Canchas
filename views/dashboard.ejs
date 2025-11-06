@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+</head>
+<body>
+  <% if (usuario && usuario.rol === 'admin') { %>
+    <h1>Bienvenido al panel de administración</h1>
+    <p><a href="/usuarios">Ir a gestión de usuarios</a></p>
+  <% } else { %>
+    <h1>Bienvenido al área de usuario</h1>
+    <p>No tienes permisos para ver el módulo de administración.</p>
+  <% } %>
+
+  <p><a href="/login/logout">Cerrar sesión</a></p>
+</body>
+</html>
