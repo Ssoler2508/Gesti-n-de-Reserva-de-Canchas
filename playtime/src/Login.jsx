@@ -11,7 +11,7 @@ export default function Login({ onBack }) {
   return (
     <div className="login-page">
       <header className="login-header">
-        <img src="/logo.svg" alt="PlayTime" className="login-top-logo" />
+        <img src="/logo play 1.png" alt="PlayTime" className="login-top-logo" />
       </header>
 
       <main className="login-main">
@@ -32,8 +32,6 @@ export default function Login({ onBack }) {
         </form>
 
         <p className="login-register">¿No Tienes Cuenta? <a href="#" onClick={(e)=>{e.preventDefault(); alert('Aquí podrías ir a registro')}}>Registrarse</a></p>
-
-        <p style={{marginTop:20}}><button className="btn ghost" onClick={onBack}>Volver</button></p>
       </main>
 
       <footer className="login-footer" />
