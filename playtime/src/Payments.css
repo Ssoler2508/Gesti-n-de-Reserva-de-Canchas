@@ -1,0 +1,53 @@
+:root{
+  --accent: #0fa867;
+  --logo-border: #1473ff;
+}
+
+.payments-page{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  display:flex;
+  flex-direction:column;
+  background: white;
+  color: #111;
+}
+
+.payments-top-left{
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 5;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border:4px solid var(--logo-border);
+  border-radius:6px;
+  background: white;
+}
+.payments-top-left img{ width:64px; height:64px; object-fit:contain }
+
+.payments-main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:40px 24px;
+}
+
+.payments-main h1{ font-size:28px; text-align:center; margin-bottom:12px }
+.payments-user{ font-size:20px; margin:18px 0 }
+
+.payments-table{ border-collapse: collapse; width:760px; max-width:92%; margin-top:18px }
+.payments-table th, .payments-table td{ border:1px solid #111; padding:18px 14px; text-align:left }
+.payments-table thead th{ font-weight:700; text-align:center }
+.payments-table td{ text-align:center }
+
+.payments-footer{ height:56px; background:var(--accent); display:flex; align-items:center; padding-left:12px }
+.home-btn{ width:40px; height:40px; border-radius:8px; border:0; background:white; margin-left:6px; box-shadow:0 6px 18px rgba(2,6,23,0.08); cursor:pointer }
+
+@media (max-width:900px){
+  .payments-table{ width:100%; font-size:14px }
+}

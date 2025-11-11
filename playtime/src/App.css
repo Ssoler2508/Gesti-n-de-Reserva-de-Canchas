@@ -117,7 +117,6 @@ body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Robot
 }
 
 /* Login page styles (appended) */
-.login-page{ min-height:100vh; display:flex; flex-direction:column; background:white; color:#111 }
 .login-header{ position:relative; padding:24px }
 .login-top-logo{ width:72px; height:72px; }
 .login-main{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px }

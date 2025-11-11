@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import './App.css'
 import Login from './Login'
+import Register from './Register'
+import Dashboard from './Dashboard'
+import Reserve from './Reserve'
+import Reservations from './Reservations'
+import Payments from './Payments'
+import Profile from './Profile'
 
 function Landing({ onLogin, onRegister }) {
   return (
@@ -30,7 +36,42 @@ export default function App() {
   const [page, setPage] = useState('landing')
 
   if (page === 'login') {
-    return <Login onBack={() => setPage('landing')} />
+    return (
+      <Login
+        onBack={() => setPage('landing')}
+        onRegister={() => setPage('register')}
+        onSuccess={() => setPage('dashboard')}
+      />
+    )
+  }
+
+  if (page === 'register') {
+    return (
+      <Register
+        onBack={() => setPage('landing')}
+        onSuccess={() => setPage('dashboard')}
+      />
+    )
+  }
+
+  if (page === 'dashboard') {
+    return <Dashboard onBack={() => setPage('landing')} onReserve={() => setPage('reserve')} onReservations={() => setPage('reservations')} onPayments={() => setPage('payments')} onProfile={() => setPage('profile')} />
+  }
+
+  if (page === 'reserve') {
+    return <Reserve onBack={() => setPage('dashboard')} />
+  }
+
+  if (page === 'reservations') {
+    return <Reservations onBack={() => setPage('dashboard')} />
+  }
+
+  if (page === 'payments') {
+    return <Payments onBack={() => setPage('dashboard')} />
+  }
+
+  if (page === 'profile') {
+    return <Profile onBack={() => setPage('dashboard')} />
   }
 
   // landing (default)

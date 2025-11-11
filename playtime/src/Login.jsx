@@ -1,10 +1,14 @@
 import React from 'react'
 import './App.css'
 
-export default function Login({ onBack }) {
+export default function Login({ onBack, onRegister, onSuccess }) {
   function handleSubmit(e) {
     e.preventDefault()
-    // placeholder behavior: just show an alert; in a real app you'd call the API
+    // In a real app you'd call the API here. If onSuccess is provided, navigate.
+    if (typeof onSuccess === 'function') {
+      onSuccess()
+      return
+    }
     alert('Simulación de inicio de sesión (no hay backend).')
   }
 
@@ -17,7 +21,7 @@ export default function Login({ onBack }) {
       <main className="login-main">
         <h2>Iniciar Sesión</h2>
 
-        <form className="login-form" onSubmit={handleSubmit}>
+  <form className="login-form" onSubmit={handleSubmit}>
           <label>
             <span className="label">Email</span>
             <input name="email" type="email" required />
@@ -31,7 +35,7 @@ export default function Login({ onBack }) {
           <button className="btn login-submit" type="submit">Ingresar</button>
         </form>
 
-        <p className="login-register">¿No Tienes Cuenta? <a href="#" onClick={(e)=>{e.preventDefault(); alert('Aquí podrías ir a registro')}}>Registrarse</a></p>
+  <p className="login-register">¿No Tienes Cuenta? <a href="#" onClick={(e)=>{e.preventDefault(); if(typeof onRegister==='function') onRegister(); else alert('Ir a registro')}}>Registrarse</a></p>
       </main>
 
       <footer className="login-footer" />
