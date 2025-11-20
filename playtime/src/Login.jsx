@@ -4,7 +4,6 @@ import './App.css'
 export default function Login({ onBack, onRegister, onSuccess }) {
   function handleSubmit(e) {
     e.preventDefault()
-    // In a real app you'd call the API here. If onSuccess is provided, navigate.
     if (typeof onSuccess === 'function') {
       onSuccess()
       return
@@ -35,7 +34,7 @@ export default function Login({ onBack, onRegister, onSuccess }) {
           <button className="btn login-submit" type="submit">Ingresar</button>
         </form>
 
-  <p className="login-register">¿No Tienes Cuenta? <a href="#" onClick={(e)=>{e.preventDefault(); if(typeof onRegister==='function') onRegister(); else alert('Ir a registro')}}>Registrarse</a></p>
+  <p className="login-register">¿No Tienes Cuenta? <button className="link-button" onClick={(e)=>{e.preventDefault(); if(typeof onRegister==='function') onRegister(); else alert('Ir a registro')}}>Registrarse</button></p>
       </main>
 
       <footer className="login-footer" />

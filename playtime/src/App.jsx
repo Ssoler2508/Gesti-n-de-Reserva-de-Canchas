@@ -11,7 +11,7 @@ import Profile from './Profile'
 function Landing({ onLogin, onRegister }) {
   return (
     <div className="hero" role="main">
-      {/* Use an <img> with object-fit:cover for more consistent full-viewport background on mobile */}
+      {}
   <img src="/333 1.png" alt="Fondo PlayTime" className="bg-img" />
       <div className="hero-overlay" />
 
@@ -50,6 +50,7 @@ export default function App() {
       <Register
         onBack={() => setPage('landing')}
         onSuccess={() => setPage('dashboard')}
+        onLogin={() => setPage('login')}
       />
     )
   }
@@ -59,19 +60,19 @@ export default function App() {
   }
 
   if (page === 'reserve') {
-    return <Reserve onBack={() => setPage('dashboard')} />
+    return <Reserve onBack={() => setPage('dashboard')} onHome={() => setPage('landing')} />
   }
 
   if (page === 'reservations') {
-    return <Reservations onBack={() => setPage('dashboard')} />
+    return <Reservations onBack={() => setPage('dashboard')} onHome={() => setPage('landing')} />
   }
 
   if (page === 'payments') {
-    return <Payments onBack={() => setPage('dashboard')} />
+    return <Payments onBack={() => setPage('dashboard')} onHome={() => setPage('landing')} />
   }
 
   if (page === 'profile') {
-    return <Profile onBack={() => setPage('dashboard')} />
+    return <Profile onBack={() => setPage('dashboard')} onHome={() => setPage('landing')} />
   }
 
   // landing (default)

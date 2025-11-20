@@ -1,5 +1,6 @@
 import React from 'react'
 import './Reserve.css'
+import HomeButton from './components/HomeButton'
 
 export default function Reserve({ onBack }) {
   const courts = [
@@ -48,7 +49,9 @@ export default function Reserve({ onBack }) {
         </div>
       </main>
 
-      <footer className="reserve-footer" />
+      <footer className="reserve-footer">
+        <HomeButton onClick={() => { if (typeof onBack === 'function') onBack() }} />
+      </footer>
     </div>
   )
 }

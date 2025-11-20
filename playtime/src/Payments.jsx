@@ -1,7 +1,8 @@
 import React from 'react'
 import './Payments.css'
+import HomeButton from './components/HomeButton'
 
-export default function Payments({ onBack }) {
+export default function Payments({ onBack, onHome }) {
   const payments = [
     { date: '4 - 11 - 2025', method: 'Tarjeta de Credito', amount: '$80.000 COP' },
     { date: '10 - 11 - 2025', method: 'Tarjeta de Credito', amount: '$60.000 COP' }
@@ -40,7 +41,7 @@ export default function Payments({ onBack }) {
       </main>
 
       <footer className="payments-footer">
-        <button className="home-btn" aria-label="Inicio" onClick={onBack}>🏠</button>
+        <HomeButton onClick={() => { if (typeof onBack === 'function') onBack(); else if (typeof onHome === 'function') onHome(); }} />
       </footer>
     </div>
   )

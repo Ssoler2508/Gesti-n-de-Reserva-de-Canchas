@@ -103,10 +103,10 @@ body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Robot
 
 .hero-actions{ display:flex; gap:20px; justify-content:center; align-items:center; flex-wrap:wrap }
 .btn{ padding:14px 26px; font-size:18px; border-radius:6px; border:0; cursor:pointer; box-shadow:0 8px 20px rgba(2,6,23,0.24); }
-.btn.primary{ background:var(--accent); color:white; }
+.btn.primary{ background:var(--accent); color:white; font-weight:400 }
 .btn.primary:hover{ background:var(--accent-dark); transform:translateY(-2px); }
-.btn.ghost{ background: white; color:var(--accent-dark); padding:12px 26px; box-shadow: 0 6px 18px rgba(2,6,23,0.08); font-weight:600 }
-.btn.ghost:hover{ transform:translateY(-2px); }
+.btn.ghost{ background:var(--accent); color:white; padding:14px 26px; box-shadow:0 8px 20px rgba(2,6,23,0.24); font-weight:400 }
+.btn.ghost:hover{ background:var(--accent-dark); transform:translateY(-2px); }
 
 @media (max-width:520px){
   .hero-title{ font-size:32px }
@@ -116,7 +116,6 @@ body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Robot
   .hero-actions{ flex-direction:column }
 }
 
-/* Login page styles (appended) */
 .login-header{ position:relative; padding:24px }
 .login-top-logo{ width:72px; height:72px; }
 .login-main{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px }
@@ -125,9 +124,19 @@ body { margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Robot
 .login-form label{ display:block }
 .login-form .label{ display:block; font-size:12px; margin-bottom:8px; color:#333; font-weight:600 }
 .login-form input{ width:100%; padding:12px 14px; border:1px solid #cfcfcf; border-radius:4px }
-.login-submit{ background:#0fa867; color:white; padding:14px; font-weight:700; border-radius:6px }
+.login-submit{ background:#0fa867; color:white; padding:14px; font-weight:400; border-radius:6px }
 .login-register{ margin-top:18px; text-align:center }
 .login-footer{ height:36px; background:#0fa867 }
+
+.link-button{
+  background:transparent;
+  border:0;
+  color:var(--accent);
+  text-decoration:underline;
+  cursor:pointer;
+  padding:0;
+  font-size:inherit;
+}
 
 @media (max-width:640px){
   .login-form{ width:320px }

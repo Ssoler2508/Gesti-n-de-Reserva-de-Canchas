@@ -23,7 +23,7 @@
   align-items:center;
   gap:10px;
   padding:8px 12px;
-  border:4px solid var(--logo-border);
+  border:0; 
   border-radius:6px;
   background: white;
 }
@@ -51,7 +51,6 @@
 .reservations-note .link{ color:var(--accent); font-weight:700 }
 
 .reservations-footer{ height:56px; background:var(--accent); display:flex; align-items:center; padding-left:12px }
-.home-btn{ width:40px; height:40px; border-radius:8px; border:0; background:white; margin-left:6px; box-shadow:0 6px 18px rgba(2,6,23,0.08); cursor:pointer }
 
 @media (max-width:640px){
   .reservations-table{ width:100% }

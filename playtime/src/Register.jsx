@@ -1,10 +1,9 @@
 import React from 'react'
 import './Register.css'
 
-export default function Register({ onBack, onSuccess }) {
+export default function Register({ onBack, onSuccess, onLogin }) {
   function handleSubmit(e) {
     e.preventDefault()
-    // In a real app you'd send the data to backend. Call onSuccess to navigate.
     if (typeof onSuccess === 'function') {
       onSuccess()
       return
@@ -20,30 +19,42 @@ export default function Register({ onBack, onSuccess }) {
       </div>
 
       <main className="register-main">
-        <h2>Registrarse</h2>
+        <div className="register-container">
+          <aside className="register-side">
+            <div className="side-card">
+              <h3>¿Ya tienes cuenta?</h3>
+              <p>Inicia sesión para continuar con tus reservas.</p>
+              <button className="side-btn" type="button" onClick={() => { if (typeof onLogin === 'function') onLogin() }}>Iniciar Sesión</button>
+            </div>
+          </aside>
 
-  <form className="register-form" onSubmit={handleSubmit}>
-          <label>
-            <span className="label">Email</span>
-            <input name="email" type="email" required />
-          </label>
+          <section className="register-form-wrapper">
+            <h2>Registrarse</h2>
 
-          <label>
-            <span className="label">Contraseña</span>
-            <input name="password" type="password" required />
-          </label>
+            <form className="register-form" onSubmit={handleSubmit}>
+              <label>
+                <span className="label">Email</span>
+                <input name="email" type="email" required />
+              </label>
 
-          <label>
-            <span className="label">Codigo de Verificación</span>
-            <input name="code" type="text" />
-          </label>
+              <label>
+                <span className="label">Contraseña</span>
+                <input name="password" type="password" required />
+              </label>
 
-          <div style={{height:18}} />
+              <label>
+                <span className="label">Código de Verificación</span>
+                <input name="code" type="text" />
+              </label>
 
-          <div style={{display:'flex', justifyContent:'center'}}>
-            <button className="btn register-submit" type="submit">Registrar</button>
-          </div>
-        </form>
+              <div style={{height:18}} />
+
+              <div style={{display:'flex', justifyContent:'center'}}>
+                <button className="btn register-submit" type="submit">Registrar</button>
+              </div>
+            </form>
+          </section>
+        </div>
       </main>
 
       <footer className="login-footer" />

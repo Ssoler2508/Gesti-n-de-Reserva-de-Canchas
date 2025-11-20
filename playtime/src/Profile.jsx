@@ -1,7 +1,8 @@
 import React from 'react'
 import './Profile.css'
+import HomeButton from './components/HomeButton'
 
-export default function Profile({ onBack }) {
+export default function Profile({ onBack, onHome }) {
   function handleUpdate(e) {
     e.preventDefault()
     alert('Simulación: información actualizada (sin backend).')
@@ -41,7 +42,9 @@ export default function Profile({ onBack }) {
         </form>
       </main>
 
-      <footer className="profile-footer" />
+      <footer className="profile-footer">
+        <HomeButton onClick={() => { if (typeof onBack === 'function') onBack(); else if (typeof onHome === 'function') onHome(); }} />
+      </footer>
     </div>
   )
 }

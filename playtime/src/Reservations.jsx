@@ -1,7 +1,8 @@
 import React from 'react'
 import './Reservations.css'
+import HomeButton from './components/HomeButton'
 
-export default function Reservations({ onBack }) {
+export default function Reservations({ onBack, onHome }) {
   const reservations = [
     { date: '4 - 11 - 2025 / 9:00 PM', status: 'Confirmada' , statusClass: 'status-confirmed'},
     { date: '10 - 11 - 2025 / 10:00 AM', status: 'Rechazada' , statusClass: 'status-rejected'}
@@ -39,7 +40,7 @@ export default function Reservations({ onBack }) {
       </main>
 
       <footer className="reservations-footer">
-        <button className="home-btn" aria-label="Inicio" onClick={onBack}>🏠</button>
+        <HomeButton onClick={() => { if (typeof onBack === 'function') onBack(); else if (typeof onHome === 'function') onHome(); }} />
       </footer>
     </div>
   )

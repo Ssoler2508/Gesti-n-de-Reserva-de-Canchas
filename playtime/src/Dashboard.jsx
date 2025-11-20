@@ -1,5 +1,6 @@
 import React from 'react'
 import './Dashboard.css'
+import HomeButton from './components/HomeButton'
 
 function Tile({ icon, label, onClick }) {
   return (
@@ -21,7 +22,9 @@ export default function Dashboard({ onBack, onReserve, onReservations, onPayment
   return (
     <div className="dashboard-page">
       <div className="dashboard-top-left">
-        <img src="/logo play 1.png" alt="PlayTime" />
+        <button className="logo-btn" type="button" aria-label="Ir al inicio" onClick={() => { if (typeof onBack === 'function') onBack() }}>
+          <img src="/logo play 1.png" alt="PlayTime" />
+        </button>
       </div>
 
       <main className="dashboard-main">
@@ -36,7 +39,7 @@ export default function Dashboard({ onBack, onReserve, onReservations, onPayment
       </main>
 
       <footer className="dashboard-footer">
-        <button className="home-btn" aria-label="Inicio">🏠</button>
+        <HomeButton onClick={() => { if (typeof onBack === 'function') onBack() }} />
       </footer>
     </div>
   )
