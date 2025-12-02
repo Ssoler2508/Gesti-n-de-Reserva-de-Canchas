@@ -9,6 +9,8 @@ import Payments from './Payments'
 import Profile from './Profile'
 import Admin2 from './admin2/Admin2'
 import Tabla from './admin2/tabla'
+import AdminDashboard from './admin2/AdminDashboard'
+import Users from './admin2/Users'
 
 function Landing({ onLogin, onRegister }) {
   return (
@@ -108,7 +110,20 @@ export default function App() {
   }
 
   if (page === 'dashboard') {
-    return <Dashboard onBack={() => setPage('landing')} onReserve={() => setPage('reserve')} onReservations={() => setPage('reservations')} onPayments={() => setPage('payments')} onProfile={() => setPage('profile')} onAdmin2={() => setPage('admin2')} />
+    return <Dashboard onBack={() => setPage('landing')} onReserve={() => setPage('reserve')} onReservations={() => setPage('reservations')} onPayments={() => setPage('payments')} onProfile={() => setPage('profile')} onAdmin={() => setPage('admin-dashboard')} />
+  }
+
+  if (page === 'admin-dashboard') {
+    // allow admin if flagged or if stored user role is admin
+    const stored = (() => { try { return JSON.parse(localStorage.getItem('user')) } catch { return null } })()
+    if (!isAdmin && !(stored && stored.role === 'admin')) { setPage('landing'); return null }
+    return <AdminDashboard onBack={() => setPage('dashboard')} onOpenUsers={() => setPage('admin-users')} onOpenCancha={() => setPage('admin2')} />
+  }
+
+  if (page === 'admin-users') {
+    const stored = (() => { try { return JSON.parse(localStorage.getItem('user')) } catch { return null } })()
+    if (!isAdmin && !(stored && stored.role === 'admin')) { setPage('landing'); return null }
+    return <Users onBack={() => setPage('admin-dashboard')} />
   }
 
   if (page === 'admin2') {

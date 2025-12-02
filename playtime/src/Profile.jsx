@@ -1,13 +1,80 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import HomeButton from './components/HomeButton'
 
 export default function Profile({ onBack, onHome }) {
-  function handleUpdate(e) {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    let mounted = true
+    async function load() {
+      setLoading(true)
+      setError(null)
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' })
+        if (!res.ok) {
+          if (res.status === 401) {
+            // not authenticated, go back
+            if (typeof onBack === 'function') onBack()
+            return
+          }
+          const b = await res.json().catch(() => ({}))
+          throw new Error(b.message || `Error ${res.status}`)
+        }
+        const body = await res.json()
+        if (mounted) setUser(body.user)
+      } catch (err) {
+        if (mounted) setError(err.message)
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+    load()
+    return () => { mounted = false }
+  }, [onBack])
+
+  async function handleUpdate(e) {
     e.preventDefault()
-    alert('Simulación: información actualizada (sin backend).')
-    if (typeof onBack === 'function') onBack()
+    if (!user) return
+    setSaving(true)
+    setError(null)
+    const form = e.target
+    const name = form.name.value
+    const email = form.email.value
+    const password = form.password.value
+    const phone = form.phone ? form.phone.value : undefined
+    try {
+      const res = await fetch(`/api/usuarios/${user.id}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, phone })
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message || 'Error updating profile')
+      setUser(body)
+      localStorage.setItem('user', JSON.stringify(body))
+      // go back to dashboard after update
+      if (typeof onBack === 'function') onBack()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setSaving(false)
+    }
   }
+
+  if (loading) return <div className="profile-page"><main className="profile-main"><p>Cargando perfil...</p></main></div>
+
+  if (error) return (
+    <div className="profile-page">
+      <main className="profile-main">
+        <p style={{ color: 'red' }}>Error: {error}</p>
+      </main>
+    </div>
+  )
 
   return (
     <div className="profile-page">
@@ -16,28 +83,35 @@ export default function Profile({ onBack, onHome }) {
       </div>
 
       <main className="profile-main">
-        <h1>Actualiza Tu informacion</h1>
+        <h1>Mi Perfil</h1>
 
         <form className="profile-form" onSubmit={handleUpdate}>
           <label>
-            <span className="label">Nuevo Email</span>
-            <input name="email" type="email" />
+            <span className="label">Nombre</span>
+            <input name="name" type="text" defaultValue={user.name || ''} />
           </label>
 
           <label>
-            <span className="label">Nueva Contraseña</span>
+            <span className="label">Email</span>
+            <input name="email" type="email" defaultValue={user.email || ''} required />
+          </label>
+
+          <label>
+            <span className="label">Nueva Contraseña (opcional)</span>
             <input name="password" type="password" />
           </label>
 
           <label>
-            <span className="label">Codigo de Verificación</span>
-            <input name="code" type="text" />
+            <span className="label">Rol</span>
           </label>
+            <div className="role-text">{user.role}</div>
 
-          <div style={{height:20}} />
+          {error && <p style={{ color: 'red' }}>{error}</p>}
 
-          <div style={{display:'flex', justifyContent:'center'}}>
-            <button className="btn profile-submit" type="submit">Actualizar</button>
+          <div style={{ height: 20 }} />
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <button className="btn profile-submit" type="submit" disabled={saving}>{saving ? 'Guardando...' : 'Actualizar'}</button>
           </div>
         </form>
       </main>
