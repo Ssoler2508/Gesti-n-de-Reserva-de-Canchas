@@ -7,13 +7,13 @@ const Reservacion = require('./reservaciones')(sequelize);
 const Pago = require('./pagos')(sequelize);
 
 // Relaciones
-Usuario.hasMany(Reservacion, { foreignKey: 'userId' });
-Reservacion.belongsTo(User, { foreignKey: 'userId' });
+Usuario.hasMany(Reservacion, { foreignKey: 'usuarioId' });
+Reservacion.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 
 Cancha.hasMany(Reservacion, { foreignKey: 'canchaId' });
 Reservacion.belongsTo(Cancha, { foreignKey: 'canchaId' });
 
-Reservacion.hasOne(Pago, { foreignKey: 'reservationId' });
-Pago.belongsTo(Reservacion, { foreignKey: 'reservationId' });
+Reservacion.hasOne(Pago, { foreignKey: 'reservacionId' });
+Pago.belongsTo(Reservacion, { foreignKey: 'reservacionId' });
 
 module.exports = { sequelize, Sequelize, Usuario, Cancha, Reservacion, Pago };

@@ -1,14 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 
 export default function Login({ onRegister, onSuccess }) {
-  function handleSubmit(e) {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    if (typeof onSuccess === 'function') {
-      onSuccess()
-      return
+    setError(null)
+    const form = e.target
+    const email = form.email.value
+    const password = form.password.value
+    setLoading(true)
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message || 'Error en login')
+      if (body.user) localStorage.setItem('user', JSON.stringify(body.user))
+      if (typeof onSuccess === 'function') onSuccess()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
     }
-    alert('Simulación de inicio de sesión (no hay backend).')
   }
 
   return (
@@ -20,7 +39,7 @@ export default function Login({ onRegister, onSuccess }) {
       <main className="login-main">
         <h2>Iniciar Sesión</h2>
 
-  <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit}>
           <label>
             <span className="label">Email</span>
             <input name="email" type="email" required />
@@ -31,10 +50,12 @@ export default function Login({ onRegister, onSuccess }) {
             <input name="password" type="password" required />
           </label>
 
-          <button className="btn login-submit" type="submit">Ingresar</button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          <button className="btn login-submit" type="submit" disabled={loading}>{loading ? 'Ingresando...' : 'Ingresar'}</button>
         </form>
 
-  <p className="login-register">¿No Tienes Cuenta? <button className="link-button" onClick={(e)=>{e.preventDefault(); if(typeof onRegister==='function') onRegister(); else alert('Ir a registro')}}>Registrarse</button></p>
+        <p className="login-register">¿No Tienes Cuenta? <button className="link-button" onClick={(e) => { e.preventDefault(); if (typeof onRegister === 'function') onRegister(); else alert('Ir a registro') }}>Registrarse</button></p>
       </main>
 
       <footer className="login-footer" />

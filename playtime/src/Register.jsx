@@ -1,14 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Register.css'
 
 export default function Register({ onSuccess, onLogin }) {
-  function handleSubmit(e) {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    if (typeof onSuccess === 'function') {
-      onSuccess()
-      return
+    setError(null)
+    const form = e.target
+    const name = form.name ? form.name.value : ''
+    const email = form.email.value
+    const password = form.password.value
+    setLoading(true)
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message || 'Error en registro')
+      if (body.user) localStorage.setItem('user', JSON.stringify(body.user))
+      if (typeof onSuccess === 'function') onSuccess()
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
     }
-    alert('Simulación de registro (sin backend).')
   }
 
   return (
@@ -33,6 +53,11 @@ export default function Register({ onSuccess, onLogin }) {
 
             <form className="register-form" onSubmit={handleSubmit}>
               <label>
+                <span className="label">Nombre</span>
+                <input name="name" type="text" />
+              </label>
+
+              <label>
                 <span className="label">Email</span>
                 <input name="email" type="email" required />
               </label>
@@ -42,15 +67,12 @@ export default function Register({ onSuccess, onLogin }) {
                 <input name="password" type="password" required />
               </label>
 
-              <label>
-                <span className="label">Código de Verificación</span>
-                <input name="code" type="text" />
-              </label>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
 
               <div style={{height:18}} />
 
               <div style={{display:'flex', justifyContent:'center'}}>
-                <button className="btn register-submit" type="submit">Registrar</button>
+                <button className="btn register-submit" type="submit" disabled={loading}>{loading ? 'Registrando...' : 'Registrar'}</button>
               </div>
             </form>
           </section>

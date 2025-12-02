@@ -10,7 +10,7 @@ const common = {
 let sequelize;
 
 if (dialect === 'sqlite') {
-  const storage = process.env.DB_STORAGE || './dev.sqlite';
+  const storage = process.env.q || './dev.sqlite';
   sequelize = new Sequelize({ ...common, storage });
 } else {
   sequelize = new Sequelize(

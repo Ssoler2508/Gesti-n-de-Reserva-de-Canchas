@@ -6,8 +6,7 @@ module.exports = (sequelize) => {
     name: { type: DataTypes.STRING, allowNull: false },
     email: { type: DataTypes.STRING, allowNull: false, unique: true },
     passwordHash: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.ENUM('usuario', 'admin'), defaultValue: 'usuario' },
-    phone: { type: DataTypes.STRING, allowNull: true },
+    role: { type: DataTypes.ENUM('usuario', 'admin'), defaultValue: 'usuario' }
   }, {
     tableName: 'usuarios'
   });
