@@ -2,11 +2,8 @@ import React from 'react'
 import './Reservations.css'
 import HomeButton from './components/HomeButton'
 
-export default function Reservations({ onBack, onHome }) {
-  const reservations = [
-    { date: '4 - 11 - 2025 / 9:00 PM', status: 'Confirmada' , statusClass: 'status-confirmed'},
-    { date: '10 - 11 - 2025 / 10:00 AM', status: 'Rechazada' , statusClass: 'status-rejected'}
-  ]
+export default function Reservations({ onBack, onHome, reservations = [], currentClient = 'Pedro Ospina' }) {
+  const myReservations = reservations.filter(r => r.client === currentClient)
 
   return (
     <div className="reservations-page">
@@ -17,22 +14,30 @@ export default function Reservations({ onBack, onHome }) {
       <main className="reservations-main">
         <h1>Mis Reservas</h1>
 
-        <h2 className="reservations-user">Pedro Ospina</h2>
+        <h2 className="reservations-user">{currentClient}</h2>
 
         <table className="reservations-table">
           <thead>
             <tr>
-              <th>Fecha de Reserva</th>
+              <th>Nombre</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Precio</th>
               <th>Estado</th>
             </tr>
           </thead>
           <tbody>
-            {reservations.map((r, i) => (
-              <tr key={i}>
+            {myReservations.length ? myReservations.map((r) => (
+              <tr key={r.id}>
+                <td style={{textAlign:'left'}}>{r.client}</td>
                 <td>{r.date}</td>
-                <td className={r.statusClass}>{r.status}</td>
+                <td>{r.hours}</td>
+                <td>{r.price.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}</td>
+                <td className={r.status === 'Confirmada' ? 'status-confirmed' : r.status === 'Rechazada' ? 'status-rejected' : 'status-pending'}>{r.status}</td>
               </tr>
-            ))}
+            )) : (
+              <tr><td colSpan={4} style={{textAlign:'center', color:'#555'}}>No tienes reservas</td></tr>
+            )}
           </tbody>
         </table>
 

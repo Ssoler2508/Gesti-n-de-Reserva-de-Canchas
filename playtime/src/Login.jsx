@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-export default function Login({ onBack, onRegister, onSuccess }) {
+export default function Login({ onRegister, onSuccess }) {
   function handleSubmit(e) {
     e.preventDefault()
     if (typeof onSuccess === 'function') {
