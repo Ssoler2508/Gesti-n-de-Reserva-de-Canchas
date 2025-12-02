@@ -45,9 +45,9 @@ const update = async (req, res) => {
       user.passwordHash = await bcrypt.hash(password, 10);
     }
 
-  //   // Prevenir cambio de rol si no es admin
-  //   await user.save();
-  //   return res.json({ id: user.id, name: user.name, email: user.email, role: user.role, phone: user.phone });
+    // Prevenir cambio de rol si no es admin (rol no se modifica aquí)
+    await user.save();
+    return res.json({ id: user.id, name: user.name, email: user.email, role: user.role, phone: user.phone });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'internal server error' });
