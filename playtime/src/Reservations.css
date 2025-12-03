@@ -46,6 +46,7 @@
 .reservations-table td{ text-align:center }
 .status-confirmed{ color:var(--accent); font-weight:700 }
 .status-rejected{ color:#e14b3b; font-weight:700 }
+.status-modified{ color:#ff9800; font-weight:700 }
 
 .reservations-note{ margin-top:28px; font-size:16px }
 .reservations-note .link{ color:var(--accent); font-weight:700 }
